@@ -46,7 +46,17 @@ class PhoneNumberFormatExtension extends Extension
     {
         return array(
             new SimpleFunction('phone_number_format', array($this->helper, 'format')),
-            new SimpleFunction('phone_number_parse_and_format', array($this->helper, 'formatAndParse'))
+            new SimpleFunction('phone_number_parse_and_format', array($this->helper, 'parseAndFormat'))
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFilters()
+    {
+        return array(
+            new \Twig_SimpleFilter('phone_number_parse_and_format', array($this->helper, 'parseAndFormat'))
         );
     }
 
