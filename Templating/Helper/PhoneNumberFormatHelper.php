@@ -96,4 +96,25 @@ class PhoneNumberFormatHelper implements HelperInterface
 
         return $this->phoneNumberUtil->format($phoneNumber, $format);
     }
+
+    /**
+     * Format a phone number.
+     *
+     * @param PhoneNumber $phoneNumber Phone number.
+     * @param int|string  $format      Format, or format constant name.
+     *
+     * @return string Formatted phone number.
+     *
+     * @throws InvalidArgumentException If an argument is invalid.
+     */
+    public function parseAndFormat($phoneNumber, $defaultRegion, $format = PhoneNumberFormat::INTERNATIONAL)
+    {
+        if($phoneNumber instanceof PhoneNumber) {
+            return $this->format($phoneNumber, $format);
+        }
+
+        $phoneNumber = $this->phoneNumberUtil->parse($phoneNumber, $defaultRegion);
+
+        return $this->format($phoneNumber, $format);
+    }
 }

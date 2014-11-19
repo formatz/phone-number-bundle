@@ -45,7 +45,8 @@ class PhoneNumberFormatExtension extends Extension
     public function getFunctions()
     {
         return array(
-            new SimpleFunction('phone_number_format', array($this->helper, 'format'))
+            new SimpleFunction('phone_number_format', array($this->helper, 'format')),
+            new SimpleFunction('phone_number_parse_and_format', array($this->helper, 'formatAndParse'))
         );
     }
 
