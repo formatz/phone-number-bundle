@@ -58,13 +58,22 @@ class PhoneNumberToStringTransformer implements DataTransformerInterface
      */
     public function transform($phoneNumber)
     {
+        $util = PhoneNumberUtil::getInstance();
+
         if (null === $phoneNumber) {
             return '';
         } elseif (false === $phoneNumber instanceof PhoneNumber) {
-            throw new TransformationFailedException('Expected a \libphonenumber\PhoneNumber.');
+            if(is_string($phoneNumber)) {
+                try {
+                    $phoneNumber = $util->parse($phoneNumber, PhoneNumberUtil::UNKNOWN_REGION);
+                } catch (NumberParseException $e) {
+                    throw new TransformationFailedException($e->getMessage(), $e->getCode(), $e);
+                }
+            }
+            else {
+                throw new TransformationFailedException('Expected a \libphonenumber\PhoneNumber.');
+            }
         }
-
-        $util = PhoneNumberUtil::getInstance();
 
         if (PhoneNumberFormat::NATIONAL === $this->format) {
             return $util->formatOutOfCountryCallingNumber($phoneNumber, $this->defaultRegion);
