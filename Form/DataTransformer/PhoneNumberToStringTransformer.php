@@ -94,7 +94,7 @@ class PhoneNumberToStringTransformer implements DataTransformerInterface
         $util = PhoneNumberUtil::getInstance();
 
         try {
-            return $util->parse($string, $this->defaultRegion);
+            return $util->format($util->parse($string, $this->defaultRegion), PhoneNumberFormat::E164);
         } catch (NumberParseException $e) {
             throw new TransformationFailedException($e->getMessage(), $e->getCode(), $e);
         }
