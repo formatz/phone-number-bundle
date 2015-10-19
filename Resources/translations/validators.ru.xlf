@@ -4,15 +4,15 @@
         <body>
             <trans-unit id="1">
                 <source>This value is not a valid phone number.</source>
-                <target>Questo valore non è un numero di telefono valido.</target>
+                <target>Значение не является допустимым номером телефона.</target>
             </trans-unit>
             <trans-unit id="2">
                 <source>This value is not a valid fixed-line number.</source>
-                <target>Questo valore non è valido per una linea telefonica fissa.</target>
+                <target>Значение не является допустимым номером фиксированной связи.</target>
             </trans-unit>
             <trans-unit id="3">
                 <source>This value is not a valid mobile number.</source>
-                <target>Questo valore non è valido per una linea telefonica mobile.</target>
+                <target>Значение не является допустимым мобильным номером.</target>
             </trans-unit>
         </body>
     </file>

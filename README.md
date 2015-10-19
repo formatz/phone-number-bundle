@@ -3,7 +3,7 @@ PhoneNumberBundle
 
 [![Build Status](https://travis-ci.org/misd-service-development/phone-number-bundle.png?branch=master)](https://travis-ci.org/misd-service-development/phone-number-bundle)
 
-This bundle integrates [Google's libphonenumber](https://code.google.com/p/libphonenumber/) into your Symfony2 application through the [giggsey/libphonenumber-for-php](https://github.com/giggsey/libphonenumber-for-php) port.
+This bundle integrates [Google's libphonenumber](https://github.com/googlei18n/libphonenumber) into your Symfony2 application through the [giggsey/libphonenumber-for-php](https://github.com/giggsey/libphonenumber-for-php) port.
 
 Authors
 -------
@@ -44,11 +44,21 @@ Installation
 Usage
 -----
 
-### `PhoneNumberUtil` service
+### Services
 
-The `libphonenumber\PhoneNumberUtil` class is available as the `libphonenumber.phone_number_util` service:
+The following services are available:
 
-    $phoneNumber = $container->get('libphonenumber.phone_number_util')->parse($string);
+| Service                                               | ID                                                 | libphonenumber version |
+| ----------------------------------------------------- | -------------------------------------------------- | ---------------------- |
+| `libphonenumber\PhoneNumberUtil`                      | `libphonenumber.phone_number_util`                 |                        |
+| `libphonenumber\geocoding\PhoneNumberOfflineGeocoder` | `libphonenumber.phone_number_offline_geocoder`     | >=5.8.8                |
+| `libphonenumber\ShortNumberInfo`                      | `libphonenumber.short_number_info`                 | >=5.8                  |
+| `libphonenumber\PhoneNumberToCarrierMapper`           | `libphonenumber.phone_number_to_carrier_mapper`    | >=5.8.8                |
+| `libphonenumber\PhoneNumberToTimeZonesMapper`         | `libphonenumber.phone_number_to_time_zones_mapper` | >=5.8.8                |
+
+So to parse a string into a `libphonenumber\PhoneNumber` object:
+
+    $phoneNumber = $container->get('libphonenumber.phone_number_util')->parse($string, PhoneNumberUtil::UNKNOWN_REGION);
 
 ### Doctrine mapping
 
@@ -71,6 +81,8 @@ You can then use the `phone_number` mapping:
     private $phoneNumber;
 
 This creates a `varchar(35)` column with a Doctrine mapping comment.
+
+Note that if you're putting the `phone_number` type on an already-existing schema the current values must be converted to the `libphonenumber\PhoneNumberFormat::E164` format.
 
 ### Formatting `libphonenumber\PhoneNumber` objects
 
